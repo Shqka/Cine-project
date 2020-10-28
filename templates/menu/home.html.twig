@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="../css/faq.css">
+<style>
+  body {
+    padding-top: 56px;
+    background-color: black !important;
+  }
+
+  .fontStyle {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+  }
+
+  .titlecarousel {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  .textcarousel {
+    font-size: 20px;
+    font-weight: normal;
+  }
+</style>
+
+<!-- _____________ F.A.Q BOUTON _____________ -->
+
+<a href="{{ path('faq') }}">
+  <h1 class="ml8">
+    <span class="letters-container">
+      <span class="letters letters-left">F.A.Q</span>
+      <span class="letters bang"></span>
+    </span>
+    <span class="circle circle-white"></span>
+    <span class="circle circle-dark"></span>
+    <span class="circle circle-container"><span class="circle circle-dark-dashed"></span></span>
+  </h1>
+</a>
+
+
+
+<!-- _____________ HEADER BOUTON _____________ -->
+<header>
+  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <!-- Slide One - Set the background image for this slide in the line below -->
+      <div class="carousel-item active" style="background-image: url('img/home/carousel1.jpg');">
+        <a href="http://localhost:8000/news7">
+          <div class="carousel-caption d-none d-md-block">
+            <h3 class="titlecarousel">La bataille pour la conquête du box-office fait rage !</h3>
+            <p class="textcarousel">« Joker » devance le nouveau film centré sur la sorcière de Disney : « Maléfique: Le
+              Pouvoir du Mal »</p>
+          </div>
+        </a>
+      </div>
+      <!-- Slide Two - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url('img/home/carousel2.jpg'); background-position: 10% 20%;">
+        <a href="http://localhost:8000/news5">
+          <div class="carousel-caption d-none d-md-block">
+            <h3 class="titlecarousel">The 100 pourrait avoir droit à un spin-off</h3>
+            <p class="textcarousel">Le préquel se déroulerait 97 ans avant les événements de la série originale.</p>
+          </div>
+        </a>
+      </div>
+      <!-- Slide Three - Set the background image for this slide in the line below -->
+      <div class="carousel-item" style="background-image: url('img/home/carousel3.jpg')">
+        <a href="http://localhost:8000/news6">
+          <div class="carousel-caption d-none d-md-block">
+            <h3 class="titlecarousel">El Camino : 25 millions de foyers ont déjà vu le film</h3>
+            <p class="textcarousel">Netflix dévoile ses chiffres.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</header>
+
+<!-- Page Content -->
+<div class="container">
+
+  <h1 class="fontStyle reveal-2">Dernières sorties cinéma</h1>
+
+
+  <!-- INCLUDE CARDS FILMS -->
+
+  {{ include('pages/home-card.html.twig') }}
+
+
+
+  <!-- Portfolio Section -->
+  <h1 class="fontStyle reveal-2" style="margin-bottom: 50px;">Dernières actualités</h1>
+
+  <div class="container">
+
+    <div class="row">
+
+      {% for article in news %}
+
+      <div class="col-lg-4 col-sm-6 portfolio-item reveal-2">
+        <div class="card h-100">
+          <a href="{{ path('news_show', {'id': article.id}) }}"><img class="card-img-top" src="{{ article.imgone }}"
+              alt=""></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a style="font-size: 20px;" href="{{ path('news_show', {'id': article.id}) }}">{{ article.title }}</a>
+            </h4>
+            <p style="color: rgba(0, 0, 0, 0.5);font-size: 11px;font-style:italic; font-weight:600">
+              {{ article.createdAt | date('d/m/Y')}} <span style="font-weight: 700;
+              font-size: 13px; color:black;"> {{ article.author }}</span></p>
+            <p class="card-text" style="font-size: 16px;">{{ article.abstract }}</p>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+
+<script src="../js/anim-text.js"></script>
+
+{% endblock %}

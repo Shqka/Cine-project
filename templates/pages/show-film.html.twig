@@ -1,0 +1,156 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Film{% endblock %}
+
+
+{% block body %}
+
+<link rel="stylesheet" href="../css/show.css">
+
+<style>
+  .fontStyle {
+    font-weight: bold;
+    font-size: 35px;
+  }
+
+  .style34 {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .style33 {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+  }
+</style>
+
+<!-- _____________ FILM INFO _____________ -->
+
+{% if film.genre == 0 %}<h1 class="titlePage reveal-2">Affiche du Film <br>{{ film.title }} </h1>{% endif %}
+{% if film.genre == 1 %}<h1 class="titlePage reveal-2">Affiche de la Série <br> {{ film.title }}</h1>{% endif %}
+{% if film.genre == 2 %}<h1 class="titlePage reveal-2">Affiche du Documentaire <br>{{ film.title }}</h1>{% endif %}
+
+{% for message in app.flashes('success') %}
+<div class="container alert alert-success">
+  {{ message }}
+</div>
+{% endfor %}
+
+<div id="filmShow">
+
+  <div class="actorImg reveal-2">
+    <img class="img-fluid" src="../{{ film.image }}" alt="" width="430" height="580">
+  </div>
+
+  <div class="actorDescription">
+    <h1 class="fontStyle reveal-2">{{ film.title }}</h1>
+
+    <p class=" reveal-2"><span class="style33">Réalisateur:</span><span class="style34"> {{ film.director }}</span></p>
+
+    <p class=" reveal-2"><span class="style33">Durée:</span> <span class="style34">{{ film.duration }}</span></p>
+
+    <p class=" reveal-2"><span class="style33">Date de sortie:</span> <span
+        class="style34">{{ film.createdAt | date('d/m/Y')}}</span></p>
+
+    <p class=" reveal-2"><span class="style33">Categorie:</span> <span class="style34">{{film.category.title}}</span>
+    </p>
+
+    <p class=" reveal-2"><span class="style33">Avec :</span> <span class="style34">{% for actor in film.actors %}
+        {{ actor.name }},{% else %} /{% endfor %}</span></p>
+
+    <p class=" reveal-2"><strong><a href="{{ path('cart_add', {'id': film.id}) }}" class="btn btn-primary">
+          <i class="fas fa-cart-plus"></i>
+          Streaming à {{ film.price }} €
+        </a></p>
+
+    <div class="iframe-container reveal-2">
+      <iframe width="560" height="315" src="{{ film.youtube }}" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <!-- _____________ SYNOPSIS _____________ -->
+
+  <div id="synopsis">
+    <h1 class="fontStyle reveal-2" style="text-align: center;margin-top: 30px;margin-bottom: 30px;">Synopsis</h1>
+    <p class="reveal-3 style34">{{ film.content }}</p>
+  </div>
+
+
+  <!-- _____________ ACTEURS _____________ -->
+
+  {% if film.actors is not empty %}
+
+  <h1 class="fontStyle reveal-2" style="text-align: center;margin-top: 30px;margin-bottom: 30px;">Acteurs</h1>
+  <ul class="card-list reveal-2">
+    {% for actor in film.actors %}
+    <li class="card">
+      <a class="card-image" href="{{path('show_actor', {'id': actor.id}) }}"
+        style="background-image: url(../img/actor/{{ actor.imgactor }});">
+        <img src="../img/actor/{{ actor.imgactor }}" alt="no img" />
+      </a>
+      <a class="card-description" href="{{path('show_actor', {'id': actor.id}) }}" style="font-size: 2vh;">
+        <p>{{ actor.name }}<p>
+            <p>{{ actor.age }} ans</p>
+      </a>
+    </li>
+    {% else %}
+    <div><br>Aucun acteur n'a été trouvé</div><br>
+    {% endfor %}
+  </ul>
+  <hr>
+  {% endif %}
+  <br>
+
+
+  <!-- _____________ COMMENTAIRES _____________ -->
+
+  <section id="commentaires" class="reveal-2" style="margin-top: 30px;margin-bottom: 30px;">
+    {% if app.user %}
+    {{ form_start(commentForm) }}
+
+    <div class="cardcomment">
+      <h2 class="card-header reveal-3">Laissez un commentaire:</h2>
+      <div class="card-body">
+
+        <div class="form-group">
+          {{ form_row(commentForm.content) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+
+      </div>
+    </div>
+
+    {{ form_end(commentForm) }}<br>
+    {% else %}
+    <p>Vous devez être <a class="btn btn-secondary" href="{{path('app_login')}}">connecté</a> pour poster un
+      commentaire</p>
+
+    {% endif %}
+    <div id="comment">
+      <h3>{{ film.comments | length}} commentaires</h3><br><br>
+
+
+      {% for comment in film.comments %}
+      <div class="media-body">
+        <h5 class="mt-0"><span style="font-weight: 700;
+          font-size: 16px; color:blue; font-style:inherit">{{ comment.user.username }}</span><span
+            style="color: rgba(0, 0, 0, 0.5);font-size: 14px;font-style:italic; font-weight:600">
+            {{ comment.createdAt|date("d/m/Y à H:i") }}</span></h5>
+        <p style="font-weight:600;">{{ comment.content }}</p>
+      </div>
+      <hr>
+      {% endfor %}
+
+    </div>
+  </section>
+
+</div>
+
+<script src="../js/anim-text.js"></script>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+
+{% extends "base.html.twig" %}
+
+{% block title %}Ajouter un nouveau bien{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+<h1 class="titlePage" style="text-align: left;">Formulaire d'inscription</h1>
+
+{{ form_start(registrationForm) }}
+
+<div class="row">
+    <div class="col-md-4">{{ form_row(registrationForm.username) }}</div>  
+</div>
+
+<div class="row">
+    <div class="col-md-4">{{ form_row(registrationForm.password) }}</div>
+</div>
+
+<div class="row">
+    <div  class="col-md-4">{{ form_row(registrationForm.agreeTerms) }}</div>
+</div><br>
+<div class="row">
+    
+</div>
+
+<button class="btn btn-primary">Créez votre compte</button> <br><br>
+
+<div class="links">
+    <p>Vous avez déjà un compte? <a href="{{ path('app_login') }}"> Cliquez ici</a></p>
+</div>
+
+{{ form_end(registrationForm) }}
+
+</div>
+
+{% endblock %}
+

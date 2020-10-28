@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acteur{% endblock %}
+
+{% block body %}
+
+<style>
+  #filmShow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .style34 {
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .style33 {
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .titleActor {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px; 
+    font-weight: bold;
+    font-size: 35px;
+  }
+</style>
+
+<h1 class="titlePage reveal-2">Page Acteur</h1>
+
+<div class="container" id="contenu">
+
+  {% for message in app.flashes('success') %}
+  <div class="alert alert-success">
+    {{ message }}
+  </div>
+  {% endfor %}
+
+  <div class="row">
+    <div class=" reveal-2 col-md-4" style="text-align:center"> <img class="img-fluid"
+        src="../img/actor/{{ actor.imgactor }}" alt="Profile image example"/></div>
+
+
+    <div class="col-md-6">
+      <h1 class=" reveal-2 titleActor" style="text-align: inherit;">{{ actor.name }}</h1>
+
+      <p class=" reveal-2"><span class="style33">Métier:</span> <span class="style34">Acteur</span></p>
+
+      <p class=" reveal-2"><span class="style33">Nationalité:</span> <span
+          class="style34">{{ actor.nationality }}</span></p>
+
+      <p class=" reveal-2"><span class="style33">Age:</span> <span class="style34">{{ actor.age }}</span></p>
+      
+      <p class=" reveal-2"><span class="style33">Date de naissance:</span> <span
+          class="style34">{{ actor.birthday|date("d/m/Y") }}</span></p>
+    </div>
+
+  </div>
+
+  <hr>
+
+  <h1 class="titleActor reveal-2">Biographie</h1>
+
+  <div>
+    <p class=" reveal-2"><span class="style34">{{ actor.description }}</span></p>
+  </div>
+
+
+<!-- _____________ FILMOGRAPHIE _____________ -->
+
+  <section class="gallery-block cards-gallery">
+    <h1 class="titleActor reveal-2">Filmographie</h1>
+
+    <div class="row">
+
+      {% for film in actor.films %}
+
+      <div class="col-md-6 col-lg-4 reveal-2" style="margin:auto">
+        <div class="card border-0 transform-on-hover">
+          <a class="lightbox" href="{{path('show', {'id': film.id}) }}"><img src="../{{ film.background }}"
+              class="card-img-top"></a>
+          <div class="card-body">
+            <h6><a href="{{path('show', {'id': film.id}) }}">{{ film.title }}</a></h6>
+            <p class="text-muted card-text">{{ film.content| truncate(61, false, '...') }}</p>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+
+    </div>
+  </section>
+
+  <!-- _____________ COMMENTAIRES _____________ -->
+
+  <section id="commentaires" class="reveal-2" style="margin-top: 30px;margin-bottom: 30px;">
+    {% if app.user %}
+    {{ form_start(commentForm) }}
+
+    <div class="cardcomment">
+      <h2 class="card-header reveal-3">Laissez un commentaire:</h2>
+      <div class="card-body">
+
+        <div class="form-group">
+          {{ form_row(commentForm.content) }}
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+
+      </div>
+    </div>
+
+    {{ form_end(commentForm) }}<br>
+    {% else %}
+    <p>Vous devez être <a class="btn btn-secondary" href="{{path('app_login')}}">connecté</a> pour poster un
+      commentaire</p>
+
+    {% endif %}
+    <div id="comment">
+      <h3>{{ actor.comments | length}} commentaires</h3><br><br>
+
+
+      {% for comment in actor.comments %}
+      <div class="media-body">
+        <h5 class="mt-0"><span style="font-weight: 700;
+          font-size: 16px; color:blue; font-style:inherit">{{ comment.user.username }}</span><span
+            style="color: rgba(0, 0, 0, 0.5);font-size: 14px;font-style:italic; font-weight:600">
+            {{ comment.createdAt|date("d/m/Y à H:i") }}</span></h5>
+        <p style="font-weight:600">{{ comment.content }}</p>
+      </div>
+      <hr>
+      {% endfor %}
+
+    </div>
+  </section>
+
+</div>
+
+<script src="../js/anim-text.js"></script>
+{% endblock %}

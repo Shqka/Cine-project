@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des documentaires{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <h1 class="titlePage">Gestion des documentaires</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de sortie</th>
+                <th>Actions</th>
+                <th>Modération</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for documentary in documentaries %}
+
+            <tr>
+                <td>{{ documentary.title }}</td>
+                <td>{{ documentary.createdAt ? documentary.createdAt|date('d-m-Y') : '' }}</td>
+
+                <td>
+                    <a href="{{ path('film_edit', {'id': documentary.id}) }}" class="btn btn-success">Editer</a>
+                    {{ include('admin/documentary/delete_doc.html.twig') }}
+                </td>
+                <td><a href="{{ path('comment_show', {'id': documentary.id}) }}"
+                        class="btn btn-warning">Commentaires</a></td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">Aucun documentaire trouvé</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="col-md-6" style="margin: auto">
+        {{ knp_pagination_render(documentaries) }}
+    </div>
+
+    <div class="text-right">
+        <a href="{{ path('index') }}" class="btn btn-info">Retour</a>
+        <a href="{{ path('film_new') }}" class="btn btn-primary">Ajouter un élément</a>
+    </div>
+</div>
+{% endblock %}

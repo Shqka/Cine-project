@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}F.A.Q{% endblock %}
+
+{% block body %}
+
+<style>
+  .card-header a {
+    display: block;
+    position: relative;
+  }
+
+  .card-header a:after {
+    content: "\f067";
+    font-family: 'FontAwesome';
+    position: absolute;
+    right: 0;
+  }
+
+  .card-header a[aria-expanded="true"]:after {
+    content: "\f410";
+  }
+
+  .allcontain {
+    margin-top: 3%;
+    margin-bottom: 3%;
+  }
+
+  .allcontain2 {
+    margin-top: 13%;
+    margin-bottom: 13%;
+  }
+</style>
+
+<script src="https://kit.fontawesome.com/73a99dd79c.js" crossorigin="anonymous"></script>
+
+<div class="container">
+
+  <h1 class="titlePage">Foire Aux Questions</h1>
+
+  <div class="allcontain">
+
+    <div class="container" style="color:black">
+
+      <!-- Accordion -->
+
+      <div id="accordion" role="tablist">
+        <div class=" card m-1">
+          <div class="card-header " role="tab">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" href="#section-1" class="text-decoration-none">Comment ça marche?</a>
+            </h5>
+          </div>
+          <div class="collapse " id="section-1" data-parent="#accordion">
+            <div class="card-body">
+              <p>Le site CineProject référencie toute l'actualité cinématographique. Vous pourrez
+                consulter de manière détaillée chaque film, série ou documentaire. Les acteurs sont eux aussi
+                répertoriés.</p>
+              <p>Si vous le souhaitez, vous pourrez acheter une version streaming de ce que vous désirez visionner.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card m-1">
+          <div class="card-header" role="tab">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" href="#section-2" class="text-decoration-none">S'inscrire</a>
+            </h5>
+          </div>
+          <div class="collapse " id="section-2" data-parent="#accordion">
+            <div class="card-body">
+              <p>Pour s'inscrire c'est très simple cliquez sur <a href="{{ path('app_login')}}">ce lien</a> ou cliquez
+                sur le petit logo utilisateur à droite du menu. Vous aurez accès à la partie commentaire du site.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card m-1 ">
+          <div class="card-header" role="tab">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" class="text-decoration-none" href="#section-3">Filtrer ses recherches </a>
+            </h5>
+          </div>
+          <div class="collapse " id="section-3" data-parent="#accordion">
+            <div class="card-body">
+              <p>Vous pouvez améliorer vos recherches en cliquant sur la petite loupe en haut à droite. Cela vous
+                permettra de rechercher efficacement
+                tous les films, séries, documentaires et acteurs présents dans notre base de données.</p>
+              <p>Un filtre par catégorie est également présent pour filtrer les films, séries et documentaires.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card m-1 ">
+          <div class="card-header" role="tab">
+            <h5 class="mb-0">
+              <a data-toggle="collapse" class="text-decoration-none" href="#section-4">Comment acheter une version
+                streaming?</a>
+            </h5>
+          </div>
+          <div class="collapse " id="section-4" data-parent="#accordion">
+            <div class="card-body">
+              <p>Vous pourrez acheter une version streaming de votre film en allant tout simplement consulter sa fiche.
+                Un bouton est présent dans la partie description, il vous redirigera vers votre panier pour finaliser le
+                paiement.</p>
+              <p>Seul le paiement par carte bancaire est accepté pour le moment.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container">
+
+  <h1 class="titlePage">Résultat de votre recherche</h1>
+ 
+  <!-- affichage films -->
+  
+  <div class="d-flex align-content-start flex-wrap">
+    {% for film in films %}
+    
+      <link rel="stylesheet" href="../css/cards.css">
+      
+      <style>
+        .film_back{{ film.id }} {
+           background: url('../{{ film.background }}');
+        }
+      </style>
+
+      <div class="movie_card" id="blocFilm" >
+        <div class="info_section">
+          <div class="movie_header">
+            <img class="afficheFilm" src="../{{ film.image }}"/>
+            <a href="{{path('show', {'id': film.id}) }}"><h1>{{ film.title }}</h1></a>
+            <h4>{{ film.createdAt | date('Y')}}, {{ film.director }}</h4>
+            <span class="minutes">{{ film.duration }}</span>
+            <p class="type">{{film.category.title}}</p>
+          </div>
+          <div class="movie_desc">
+            <p class="text">
+              {{ film.content| truncate(300, false, '...') }}
+            </p>
+          </div>
+        </div>
+        <div class="blur_back film_back{{ film.id }}"></div>
+      </div>
+
+      {% endfor %}
+
+  </div>
+
+  
+
+  <!-- affichage acteurs -->
+  
+
+  <div class="d-flex align-content-start flex-wrap">
+    {% for actor in actors %}
+
+    <link rel="stylesheet" href="../css/show.css">
+    <li class="card">
+      <a class="card-image" href="{{path('show_actor', {'id': actor.id}) }}" style="background-image: url(../img/actor/{{ actor.imgactor }});">
+        <img src="../img/actor/{{ actor.imgactor }}" alt="no img" />
+      </a>
+      <a class="card-description" href="{{path('show_actor', {'id': actor.id}) }}" style="font-size: 2vh; text-align: center;">
+        <p>{{ actor.name }}<p>
+        <p>{{ actor.age }} ans</p>
+      </a>
+    </li>
+    {% endfor %}
+
+  </div>
+ 
+
+  <!-- condition si aucun résultat -->
+  {% if films or actors is not empty %}
+  {% else %}
+  
+    <h1 class="titleElse">Aucun résultat pour votre recherche !</h1>
+  
+  {% endif %}
+
+</div>
+{% endblock %}

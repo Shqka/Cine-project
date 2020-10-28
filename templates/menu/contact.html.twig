@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire de Contact{% endblock %}
+
+{% block body %}
+
+<style>
+    .anim41 {
+        position: relative;
+    }
+
+    .anim41 .text-wrapper {
+        position: relative;
+        display: inline-block;
+        padding-top: 0.2em;
+        padding-right: 0.05em;
+        padding-bottom: 0.1em;
+        overflow: hidden;
+    }
+
+    .anim41 .letter {
+        display: inline-block;
+        line-height: 1em;
+        transform-origin: 0 0;
+    }
+</style>
+
+<div class="container">
+
+    <h1 class="anim41 titlePage">
+        <span class="text-wrapper">
+            <span class="letters">Formulaire de Contact</span>
+        </span>
+    </h1>
+
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    <div>
+        {{ form_start(email_form) }}
+        {{ form_widget(email_form) }}
+
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="submit" value="Envoyer" class="btn btn-primary" />
+            </div>
+        </div>
+
+        {{ form_end(email_form) }}
+    </div>
+
+</div>
+
+
+<!-- _____________ SCRIPT ANIMATION DU TEXTE _____________ -->
+
+<script src="../js/anim-text.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<script>
+
+    // Passe toutes les lettres dans une balise span
+    var textWrapper = document.querySelector('.anim41 .letters');
+    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+    anime.timeline({
+            loop: true
+        })
+        .add({
+            targets: '.anim41 .letter',
+            rotateY: [-90, 0],
+            duration: 1300,
+            delay: (el, i) => 45 * i
+        }).add({
+            targets: '.anim41',
+            opacity: 0,
+            duration: 1000,
+            easing: "easeOutExpo",
+            delay: 1000
+        });
+        
+</script>
+{% endblock %}

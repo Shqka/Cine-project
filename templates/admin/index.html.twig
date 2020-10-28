@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin index{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+  <h1 class="titlePage">Administration</h1>
+
+  {% for message in app.flashes('success') %}
+  <div class="alert alert-success">
+    {{ message }}
+  </div>
+  {% endfor %}
+
+  <p style="font-size:20px; color:black; font-weight:bold">Bonjour <span
+      style="color: red;font-size:25px">{{ app.user.username }}</span> !</p> <br>
+
+
+  <div class="list-group">
+    
+    <div href="#" class="list-group-item list-group-item-action active" style="font-size: 20px;">
+      Administration
+    </div>
+
+    <a href="{{path('film_index')}}" class="list-group-item list-group-item-action" style="color: cornflowerblue"><i
+        class="fa fa-lock" aria-hidden="true"></i> Films</a>
+
+    <a href="{{path('serie_index')}}" class="list-group-item list-group-item-action" style="color:forestgreen"><i
+        class="fa fa-lock" aria-hidden="true"></i> Séries</a>
+
+    <a href="{{path('doc_index')}}" class="list-group-item list-group-item-action" style="color:crimson"><i
+        class="fa fa-lock" aria-hidden="true"></i> Documentaires</a>
+
+    <a href="{{path('actor_index')}}" class="list-group-item list-group-item-action" style="color:black"><i
+        class="fa fa-lock" aria-hidden="true"></i> Acteurs</a>
+
+    <a href="{{path('news_index')}}" class="list-group-item list-group-item-action" style="color:coral"><i
+        class="fa fa-lock" aria-hidden="true"></i> News</a>
+
+  </div>
+
+</div>
+{% endblock %}

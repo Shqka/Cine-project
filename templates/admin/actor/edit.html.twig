@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Acteurs{% endblock %}
+
+{% block stylesheets %}
+<link href="../../../css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="../../../css/app.css">
+{% endblock %}
+
+{% block body %}
+
+<!-- Script pour le filtre -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<div class="container">
+
+    <h1 class="titlePage">Gestion des acteurs</h1>
+    
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col">{{ form_row(form.name) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">{{ form_row(form.birthday) }}</div>
+        <div class="col-4">{{ form_row(form.age) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">{{ form_row(form.nationality) }}</div>
+        <div class="col-6">{{ form_row(form.imgactor) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col">{{ form_row(form.description) }}</div>
+    </div>
+    <input id="myInput" type="text" placeholder="Cherchez un film">
+    <div class="row">
+        
+        <div class="col">{{ form_row(form.films) }}</div>
+    </div>
+
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">Enregistrer</button> <br><br>
+
+    {{ form_end(form) }}
+    
+    <a href="{{ path('actor_index') }}" class="btn btn-info">Retour au menu</a>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script src="../../../js/anime.min.js"></script>
+<script src="../../../js/app.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/bootstrap.bundle.min.js"></script>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+{% block body %}
+<div class="container">
+
+<h1 class="titlePage">Résultat de votre recherche</h1>
+
+{% if categories is not empty %}
+
+
+<div class="d-flex align-content-start flex-wrap">
+    {% for category in categories %}
+
+    <link rel="stylesheet" href="../css/cards.css">
+      
+      <style>
+        .film_back{{ category.id }} {
+           background: url('../{{ category.background }}');
+        }
+      </style>
+
+      <div class="movie_card" id="blocFilm" >
+        <div class="info_section">
+          <div class="movie_header">
+            <img class="afficheFilm" src="../{{ category.image }}"/>
+            <a href="{{path('show', {'id': category.id}) }}"><h1>{{ category.title }}</h1></a>
+            <h4>{{ category.createdAt | date('Y')}}, {{ category.director }}</h4>
+            <span class="minutes">{{ category.duration }}</span>
+            <p class="type">{{category.category.title}}</p>
+          </div>
+          <div class="movie_desc">
+            <p class="text">
+              {{ category.content| truncate(300, false, '...') }}
+            </p>
+          </div>
+        </div>
+        <div class="blur_back film_back{{ category.id }}"></div>
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+
+{% else %}
+
+<h1 class="titleElse">Aucun résultat pour votre recherche !</h1>
+
+{% endif %}
+</div>
+{% endblock %}

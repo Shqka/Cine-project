@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modération des commentaires{% endblock %}
+
+{% block body %}
+<div class="container">
+
+    <h1 class="titlePage">Modération des commentaires</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Commentaires</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in film.comments %}
+
+            <tr>
+                <td>
+                    <div class="media mb-4">
+                        <div class="media-body">
+                            <h5 class="mt-0"><span style="font-weight: bold">{{ comment.user.username }}</span><span
+                                    style="font-style: italic"> {{ comment.createdAt|date("d/m/Y à H:i") }}</span>
+                            </h5>
+                            {{ comment.content }}
+                        </div>
+                    </div>
+                </td>
+                <td><a href="{{ path('comment_edit', {'id': comment.id}) }}" class="btn btn-success">Editer</a>
+                    {{ include('admin/comment/delete_comment.html.twig') }}</td>
+
+
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">Aucun commentaire n'a été posté</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('index') }}" class="btn btn-info">Retour au menu</a> <br><br><br>
+
+</div>
+<hr>
+
+{% endblock %}

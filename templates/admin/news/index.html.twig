@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin News{% endblock %}
+
+{% block stylesheets %}
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+<link rel="stylesheet" href="../../css/app.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+
+    <h1 class="titlePage">Admin News</h1>
+
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for news in news %}
+            <tr>
+                <td>{{ news.title }}</td>
+                <td>{{ news.author }}</td>
+                <td>
+                    <a href="{{ path('news_edit', {'id': news.id}) }}" class="btn btn-success">Editer</a>
+                    {{ include('admin/news/_delete_form.html.twig') }}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <a href="{{ path('index') }}" class="btn btn-info">Retour</a>
+        <a href="{{ path('news_new') }}" class="btn btn-primary">Ajouter un article</a>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="../../js/anime.min.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.bundle.min.js"></script>
+{% endblock %}

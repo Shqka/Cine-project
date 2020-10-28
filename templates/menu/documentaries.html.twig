@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des documentaires{% endblock %}
+
+{% block body %}
+
+<section class="gallery-block cards-gallery">
+
+  <div class="container">
+
+      <h1 class="titlePage">Galerie des Documentaires</h1>
+
+    <div class="input-group mb-3">
+      <form class="form-inline" action="{{ path('filter') }}" method="POST">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="category-select">Catégorie</label>
+        </div>
+        <select class="custom-select" id="icategory-select" name="filterpost">
+          {% for category in categories %}
+
+          <option value="{{ category.title }}">{{ category.title }}</option>
+
+          {% endfor %}
+        </select>
+        <button class="btn btn-info my-2 my-sm-0">Filtrer</button>
+      </form>
+    </div><br>
+
+    <div class="row">
+
+      {% for documentary in documentaries %}
+
+      <link rel="stylesheet" href="../css/cards.css">
+      
+      <style>
+        .film_back{{ documentary.id }} {
+           background: url('../{{ documentary.background }}');
+        }
+      </style>
+
+      <div class="movie_card" id="blocFilm" >
+        <div class="info_section">
+          <div class="movie_header">
+            <img class="afficheFilm" src="../{{ documentary.image }}"/>
+            <a href="{{path('show', {'id': documentary.id}) }}"><h1>{{ documentary.title }}</h1></a>
+            <h4>{{ documentary.createdAt | date('Y')}}, {{ documentary.director }}</h4>
+            <span class="minutes">{{ documentary.duration }}</span>
+            <p class="type">{{documentary.category.title}}</p>
+          </div>
+          <div class="movie_desc">
+            <p class="text">
+              {{ documentary.content| truncate(300, false, '...') }}
+            </p>
+          </div>
+        </div>
+        <div class="blur_back film_back{{ documentary.id }}"></div>
+      </div>
+
+      {% endfor %}
+
+    </div>
+
+    <div class="col-md-6" style="margin: auto">
+      {{ knp_pagination_render(documentaries) }}
+    </div>
+  </div>
+
+</section>
+
+{% endblock %}

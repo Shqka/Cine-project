@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin Films{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1 class="titlePage">Gestion des films</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de sortie</th>
+                <th>Actions</th>
+                <th>Modération</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for film in films %}
+
+            <tr>
+                <td>{{ film.title }}</td>
+                <td>{{ film.createdAt ? film.createdAt|date('d-m-Y') : '' }}</td>
+
+                <td>
+                    <a href="{{ path('film_edit', {'id': film.id}) }}" class="btn btn-success">Editer</a>
+                    {{ include('admin/film/delete_film.html.twig') }}
+                </td>
+                <td><a href="{{ path('comment_show', {'id': film.id}) }}" class="btn btn-warning">Commentaires</a></td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7">Aucun film trouvé</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="col-md-6" style="margin: auto">
+        {{ knp_pagination_render(films) }}
+    </div>
+
+    <div class="text-right">
+        <a href="{{ path('index') }}" class="btn btn-info">Retour</a>
+        <a href="{{ path('film_new') }}" class="btn btn-primary">Ajouter un élément</a>
+    </div>
+</div>
+{% endblock %}

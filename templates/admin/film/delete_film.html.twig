@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('film_delete', {'id': film.id}) }}" style="display: inline-block"
+    onsubmit="return confirm('Voulez-vous retirer ce film?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ film.id) }}">
+    <button class="btn btn-danger">Supprimer</button>
+</form>

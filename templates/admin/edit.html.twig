@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer un élément{% endblock %}
+
+{% block stylesheets %}
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+    <link rel="stylesheet" href="../../css/app.css">
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1 class="titlePage">Editer un élément</h1>
+
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col">{{ form_row(form.genre) }}</div>
+        <div class="col">{{ form_row(form.category) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">{{ form_row(form.title) }}</div>
+        <div class="col-4">{{ form_row(form.createdAt) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-8">{{ form_row(form.director) }}</div>
+        <div class="col-4">{{ form_row(form.duration) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">{{ form_row(form.image) }}</div>
+        <div class="col-4">{{ form_row(form.youtube) }}</div>
+        <div class="col">{{ form_row(form.price) }}</div>
+    </div>
+
+    <div class="row">
+        <div class="col">{{ form_row(form.background) }}</div>
+        <div class="col">{{ form_row(form.listimg) }}</div>
+    </div>
+
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">Enregistrer</button> <br><br>
+
+    {{ form_end(form) }}
+
+    <a href="{{ path('index') }}" class="btn btn-info">Retour au menu</a>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="../../js/anime.min.js"></script>
+    <script src="../../js/app.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.bundle.min.js"></script>
+{% endblock %}
